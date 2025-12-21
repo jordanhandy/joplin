@@ -50,6 +50,7 @@ function databaseConfigFromEnv(runningInDocker: boolean, env: EnvVariables, slav
 		name: '',
 		slowQueryLogEnabled: env.DB_SLOW_QUERY_LOG_ENABLED,
 		slowQueryLogMinDuration: env.DB_SLOW_QUERY_LOG_MIN_DURATION,
+		maxConnections: env.DB_MAX_CONNECTIONS,
 		autoMigration: env.DB_AUTO_MIGRATION,
 	};
 
@@ -163,7 +164,7 @@ function samlConfigFromEnv(env: EnvVariables): SamlConfig {
 	}
 }
 
-const isUsingExternalAuth = (env: EnvVariables) => {
+export const isUsingExternalAuth = (env: EnvVariables) => {
 	return !!env.SAML_ENABLED || !!env.LDAP_1_ENABLED || !!env.LDAP_2_ENABLED;
 };
 

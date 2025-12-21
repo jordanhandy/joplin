@@ -178,6 +178,9 @@ const buildStartupTasks = (
 		Setting.setConstant('pluginAssetDir', `${Setting.value('resourceDir')}/pluginAssets`);
 		Setting.setConstant('pluginDir', `${getProfilesRootDir()}/plugins`);
 		Setting.setConstant('pluginDataDir', getPluginDataDir(currentProfile, isSubProfile));
+		Setting.setConstant('sync.9.apiKey', '');
+		Setting.setConstant('sync.10.apiKey', '');
+		Setting.setConstant('sync.11.apiKey', '');
 	});
 	addTask('buildStartupTasks/make resource directory', async () => {
 		await shim.fsDriver().mkdir(Setting.value('resourceDir'));
@@ -487,6 +490,14 @@ const buildStartupTasks = (
 		// await checkTestData(testData);
 
 		// await printTestData();
+	});
+	addTask('buildStartupTasks/optionally show sync wizard', async () => {
+		if (Setting.value('sync.wizard.autoShowOnStartup') && Setting.value('sync.target') === 0) {
+			dispatch({
+				type: 'SYNC_WIZARD_VISIBLE_CHANGE',
+				visible: true,
+			});
+		}
 	});
 
 	return startupTasks;
